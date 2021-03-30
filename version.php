@@ -23,6 +23,6 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'block_assignmentsquizzes_report';
-$plugin->version = 20210322;
+$plugin->component = 'block_naplan_results_report';
+$plugin->version = 20210330;
 $plugin->requires = 2010112400;

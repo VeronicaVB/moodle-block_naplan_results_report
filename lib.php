@@ -15,154 +15,70 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *  Attendance report block
+ *  NAPLAN report block
  *
- * @package    block_assignmentsquizzes_report
+ * @package    block_naplan_results_report
  * @copyright 2021 Veronica Bermegui
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace assignmentsquizzes_report;
+namespace naplan_results_report;
 
 /**
  * Returns the context for the template
  * @return string
  */
 
-function get_template_context($username)
-{
- 
-    $moodleassignments = get_moodle_assignments_context($username);
-    $quizzess = get_quizzes_context($username);
-    //  $assignments = get_assignments_context();
-
-    return array_merge($moodleassignments, $quizzess);
-}
-
-function get_moodle_assignments_context($username)
+function get_template_contexts($username)
 {
 
-    $assignments = get_moodle_assignment_grades_by_id($username);
+    $results = get_naplan_results($username);
 
-    $data = [];
+    $years = [];
+    $areasdetails = [];
 
-    foreach ($assignments as $assignmnet) {
-        $assign = new \stdClass();
-        $assign->assignmentname =  $assignmnet->name;
-        $assign->date =   date("d-m-Y", strtotime($assignmnet->timecreated));;
-        $assign->coursename = $assignmnet->coursename;
-        $assign->score = "$assignmnet->grade ($assignmnet->outof)";
-        $data['courses'][$assignmnet->coursename][] = $assign;
-        $context = [];
+    foreach ($results as $result) {
 
-        foreach ($data['courses'] as $c => $courses) {
-            foreach ($courses as $course) {
-                $context['courses']['course'][] = $course;
-            }
-        }
-    }
-    return $context;
-}
-
-function get_quizzes_context($username)
-{
-    $quizzes = get_moodle_quiz_data_by_id($username);
-    $data = [];
-
-    foreach ($quizzes as $quizz) {
-        $q = new \stdClass();
-        $q->quizname =  $quizz->quizname;
-        $q->coursenameq = $quizz->coursename;
-        $q->timestart = date("d-m-Y h:i A", strtotime($quizz->timestart));
-        $q->timefinish = date("d-m-Y h:i A", strtotime($quizz->timefinish));
-        $q->sumgrades = "$quizz->sumgrades ($quizz->maxmark)";
-        $data['courses'][$quizz->coursename][] = $q;
-        $context = [];
-
-        foreach ($data['courses'] as $c => $courses) {
-            foreach ($courses as $course) {
-                $context['quizzes']['quiz'][] = $course;
-            }
-        }
+        $years['year'][] = $result->testleveldescription;
+        $r = new \stdClass();
+        $r->value = $result->testresultdescription;
+        $areasdetails[ $result->testareadescription]['result'][] = $r;
     }
 
-    return $context;
-}
+    
+    $years = array_unique($years['year']);
+    $yearlabels = [];
 
-function get_assignments_context()
-{
-    $assignments = get_assignments_by_student_id();
-    // var_dump($assignments); exit;
-}
-
-/**
- * Call to the SP 
- */
-function get_assignments_by_student_id()
-{
-    global $USER;
-
-    try {
-
-        $config = get_config('block_assignmentsquizzes_report');
-
-        // Last parameter (external = true) means we are not connecting to a Moodle database.
-        $externalDB = \moodle_database::get_driver_instance($config->dbtype, 'native', true);
-
-        // Connect to external DB
-        $externalDB->connect($config->dbhost, $config->dbuser, $config->dbpass, $config->dbname, '');
-
-        $sql = 'EXEC ' . $config->dbspassignments . ' :id';
-
-        $params = array(
-            'id' => $USER->username,
-        );
-
-        $assignments = $externalDB->get_records_sql($sql, $params);
-
-        return $assignments;
-    } catch (\Exception $ex) {
-        throw $ex;
+    foreach ($years as $year) {
+        $y = new \stdClass();
+        $y->year = $year;
+        $yearlabels['label'][] = $y;
     }
-}
 
-/**
- * Call to the SP 
- */
-function get_moodle_quiz_data_by_id($username)
-{
-    try {
-
-        $config = get_config('block_assignmentsquizzes_report');
-
-        // Last parameter (external = true) means we are not connecting to a Moodle database.
-        $externalDB = \moodle_database::get_driver_instance($config->dbtype, 'native', true);
-
-        // Connect to external DB
-        $externalDB->connect($config->dbhost, $config->dbuser, $config->dbpass, $config->dbname, '');
-
-        $sql = 'EXEC ' . $config->dbspquizzbyid . ' :id';
-
-        $params = array(
-            'id' => $username,
-        );
-
-        $moodlequizzes = $externalDB->get_records_sql($sql, $params);
-
-        return $moodlequizzes;
-    } catch (\Exception $ex) {
-        throw $ex;
+    foreach($areasdetails as $area => $results) {
+        $summary = new \stdClass();
+        $summary->area = $area;
+        $summary->results = $results;
+        
+        $summaries['summaries'][] = $summary;
     }
-}
-/**
- * Call to the SP 
- */
-function get_moodle_assignment_grades_by_id($username)
-{
+
    
+    $data = ['years' => $yearlabels, 'testarea' => $summaries];
+
+    return $data;
+}
+
+
+/**
+ * Call to the SP 
+ */
+function get_naplan_results($username)
+{
+
     try {
 
-        $config = get_config('block_assignmentsquizzes_report');
+        $config = get_config('block_naplan_results_report');
 
         // Last parameter (external = true) means we are not connecting to a Moodle database.
         $externalDB = \moodle_database::get_driver_instance($config->dbtype, 'native', true);
@@ -170,16 +86,15 @@ function get_moodle_assignment_grades_by_id($username)
         // Connect to external DB
         $externalDB->connect($config->dbhost, $config->dbuser, $config->dbpass, $config->dbname, '');
 
-        $sql = 'EXEC ' . $config->dbspmoodleassign . ' :id';
+        $sql = 'EXEC ' . $config->dbspnaplanresult . ' :id';
 
         $params = array(
             'id' => $username,
         );
 
-        $moodleassignments = $externalDB->get_records_sql($sql, $params);
+        $naplanresults = $externalDB->get_records_sql($sql, $params);
 
-
-        return $moodleassignments;
+        return $naplanresults;
 
     } catch (\Exception $ex) {
         throw $ex;
@@ -196,11 +111,11 @@ function can_view_on_profile()
     if ($PAGE->url->get_path() ==  '/moodledummy/user/profile.php') { // TODO: REMOVE THE dummy part.
         // Admin is allowed.
         $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
-        
+
         if (is_siteadmin($USER) && $profileuser->username != $USER->username) {
             return true;
         }
-        
+
         // Students are allowed to see timetables in their own profiles.
         if ($profileuser->username == $USER->username && !is_siteadmin($USER)) {
             return true;
@@ -232,7 +147,6 @@ function can_view_on_profile()
                 return true;
             }
         }
-
     }
 
     return false;

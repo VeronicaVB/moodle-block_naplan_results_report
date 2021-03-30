@@ -18,7 +18,7 @@
 /**
  * Attendance report block
  *
- * @package    block_assignmentsquizzes_report
+ * @package   block_naplan_results_report
  * @copyright 2021 Veronica Bermegui
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,33 +28,31 @@ defined('MOODLE_INTERNAL') || die();
 if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_heading(
-        'block_assignmentsquizzes_report',
+        'block_naplan_results_report',
         '',
-        get_string('pluginname_desc', 'block_assignmentsquizzes_report')
+        get_string('pluginname_desc', 'block_naplan_results_report')
     ));
 
     $options = array('', "mysqli", "oci", "pdo", "pgsql", "sqlite3", "sqlsrv");
     $options = array_combine($options, $options);
 
     $settings->add(new admin_setting_configselect(
-        'block_assignmentsquizzes_report/dbtype',
-        get_string('dbtype', 'block_assignmentsquizzes_report'),
-        get_string('dbtype_desc', 'block_assignmentsquizzes_report'),
+        'block_naplan_results_report/dbtype',
+        get_string('dbtype', 'block_naplan_results_report'),
+        get_string('dbtype_desc', 'block_naplan_results_report'),
         '',
         $options
     ));
 
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbhost', get_string('dbhost', 'block_assignmentsquizzes_report'), get_string('dbhost_desc', 'block_assignmentsquizzes_report'), 'localhost'));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/dbhost', get_string('dbhost', 'block_naplan_results_report'), get_string('dbhost_desc', 'block_naplan_results_report'), 'localhost'));
 
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbuser', get_string('dbuser', 'block_assignmentsquizzes_report'), '', ''));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/dbuser', get_string('dbuser', 'block_naplan_results_report'), '', ''));
 
-    $settings->add(new admin_setting_configpasswordunmask('block_assignmentsquizzes_report/dbpass', get_string('dbpass', 'block_assignmentsquizzes_report'), '', ''));
+    $settings->add(new admin_setting_configpasswordunmask('block_naplan_results_report/dbpass', get_string('dbpass', 'block_naplan_results_report'), '', ''));
 
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbname', get_string('dbname', 'block_assignmentsquizzes_report'), '', ''));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/dbname', get_string('dbname', 'block_naplan_results_report'), '', ''));
 
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbspmoodleassign', get_string('dbspmoodleassign', 'block_assignmentsquizzes_report'), get_string('dbspmoodleassign_desc', 'block_assignmentsquizzes_report'), ''));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/dbspnaplanresult', get_string('dbspnaplanresult', 'block_naplan_results_report'), get_string('dbspnaplanresult_desc', 'block_naplan_results_report'), ''));
 
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbspquizzbyid', get_string('dbspquizzbyid', 'block_assignmentsquizzes_report'), get_string('dbspquizzbyid_desc', 'block_assignmentsquizzes_report'), ''));
-
-    $settings->add(new admin_setting_configtext('block_assignmentsquizzes_report/dbspassignments', get_string('dbspassignments', 'block_assignmentsquizzes_report'), get_string('dbspassignments_desc', 'block_assignmentsquizzes_report'), ''));
+    
 }

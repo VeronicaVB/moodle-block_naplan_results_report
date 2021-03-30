@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with Moodle. If not, see
 <http: //www.gnu.org/licenses />.
 
-@package block_attendance_report
+@package block_naplan_results_report
 @copyright 2021 Veronica Bermegui
 @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
@@ -23,39 +23,30 @@ along with Moodle. If not, see
 
 <section class="node_category card d-inline-block w-100 mb-3">
     <div class="card-body">
-        <h3 class="lead">{{#str}} pluginname, block_assignmentsquizzes_report {{/str}}</h3>
+        <h3 class="lead">{{#str}}naplan_results_report, block_naplan_results_report {{/str}}</h3>
         <div class="container-fluid">
             <div class="row align-items-center">
-                <!-- <div class="col-lg-12">
-                    <dl>
-                        <dt>{{#str}}assignments, block_assignmentsquizzes_report{{/str}}</dt> <br>
-                        <dd>
-                            <ul class="badges">
-                                {{> block_assignmentsquizzes_report/assignments}}
-                            </ul>
-                        </dd>
-                    </dl>
-                </div> -->
+               
                 <div class="col-lg-6">
                     <dl>
-                        <dt>{{#str}}moodleassing, block_assignmentsquizzes_report{{/str}}</dt> <br>
                         <dd>
                             <ul class="badges">
-                                {{> block_assignmentsquizzes_report/moodleassignments}}
+                                {{> block_naplan_results_report/naplan_result}}
                             </ul>
                         </dd>
                     </dl>
                 </div>
+
                 <div class="col-lg-6">
                     <dl>
-                        <dt>{{#str}}moodlequiz, block_assignmentsquizzes_report{{/str}}</dt> <br>
                         <dd>
                             <ul class="badges">
-                                {{> block_assignmentsquizzes_report/quizzes}}
+                               <img class = "naplan-scale" src="https://www.nap.edu.au/_resources/common_scales_image_file.png" >
                             </ul>
                         </dd>
                     </dl>
                 </div>
+               
             </div>
    
 

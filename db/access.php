@@ -17,14 +17,14 @@
 /**
  * Continuos assessment report
  *
- * @package    block_assignmentsquizzes_report
+ * @package    block_naplan_results_report
  * @copyright 2021 Veronica Bermegui
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
-    'block/assignmentsquizzes_report:myaddinstance' => array(
+    'block/naplan_results_report:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -32,7 +32,7 @@ $capabilities = array(
         ),
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
-    'block/assignmentsquizzes_report:addinstance' => array(
+    'block/naplan_results_report:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,

@@ -17,25 +17,25 @@
 /**
  * Continuous reporting block
  *
- * @package    block_assignmentsquizzes_report
+ * @package    block_naplan_results_report
  * @copyright 2021 Veronica Bermegui
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/blocks/assignmentsquizzes_report/lib.php');
+require_once($CFG->dirroot . '/blocks/naplan_results_report/lib.php');
 
-class block_assignmentsquizzes_report extends block_base
+class block_naplan_results_report extends block_base
 {
 
     public function init()
     {
-        $this->title = get_string('pluginname', 'block_assignmentsquizzes_report');
+        $this->title = get_string('pluginname', 'block_naplan_results_report');
     }
 
     public function get_content()
     {
-        global  $OUTPUT, $PAGE, $DB, $USER;
+        global  $OUTPUT, $DB, $PAGE;
         
         if ($this->content !== null) {
             return $this->content;
@@ -44,34 +44,30 @@ class block_assignmentsquizzes_report extends block_base
         $this->content = new stdClass;
         $this->content->text = '';
         $this->content->footer = '';
-        $config = get_config('block_assignmentsquizzes_report');
-      
+        $config = get_config('block_naplan_results_report');
+        
         // Check DB settings are available
         if( empty($config->dbtype) ||
             empty($config->dbhost) ||
             empty($config->dbuser) ||
             empty($config->dbpass) ||
             empty($config->dbname) ||
-            empty($config->dbspmoodleassign) ||
-            empty($config->dbspquizzbyid)  ||
-            empty($config->dbspassignments)) {
-            $notification = new \core\output\notification(get_string('nodbsettings', 'block_assignmentsquizzes_report'),
+            empty($config->dbspnaplanresult)) {
+            $notification = new \core\output\notification(get_string('nodbsettings', 'block_naplan_results_report'),
                                                           \core\output\notification::NOTIFY_ERROR);
             $notification->set_show_closebutton(false);
             return $OUTPUT->render($notification);
         }
 
-        if (assignmentsquizzes_report\can_view_on_profile()) {
-       
+        if (grades_effort_report\can_view_on_profile()) {
             $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);          
-            $data = assignmentsquizzes_report\get_template_context($profileuser->username);
-            $this->content->text = $OUTPUT->render_from_template('block_assignmentsquizzes_report/main', $data);
+            $data = naplan_results_report\get_template_contexts($profileuser->username);
+            $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);   
         } else {
-            $this->content->text = get_string('reportunavailable', 'block_assignmentsquizzes_report');
-        }
-       
+            $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
 
-        return $this->content;
+        }
+         
     }
 
     public function instance_allow_multiple()
