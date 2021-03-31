@@ -31,25 +31,29 @@ along with Moodle. If not, see
                     <dl>
                         <dd>
                             <ul class="badges">
-                                {{> block_naplan_results_report/naplan_result}}
-                            </ul>
-                        </dd>
-                    </dl>
-                </div>
+                                {{#hasdata}} 
+                                    {{> block_naplan_results_report/naplan_result}}
+                                {{/hasdata}}
 
-                <div class="col-lg-6">
-                    <dl>
-                        <dd>
-                            <ul class="badges">
-                               <img class = "naplan-scale" src="https://www.nap.edu.au/_resources/common_scales_image_file.png" >
+                                {{^hasdata}}
+                                    {{> block_naplan_results_report/naplan_no_data}}
+                                {{/hasdata}}
                             </ul>
                         </dd>
                     </dl>
                 </div>
-               
+                {{#hasdata}} 
+                    <div class="col-lg-6">
+                        <dl>
+                            <dd>
+                                <ul class="badges">
+                                <img class = "naplan-scale" src="https://www.nap.edu.au/_resources/common_scales_image_file.png" >
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                {{/hasdata}} 
             </div>
-   
-
         </div>
     </div>
 </section>

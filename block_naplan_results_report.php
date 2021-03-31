@@ -36,38 +36,43 @@ class block_naplan_results_report extends block_base
     public function get_content()
     {
         global  $OUTPUT, $DB, $PAGE;
-        
+
         if ($this->content !== null) {
             return $this->content;
         }
-        
+
         $this->content = new stdClass;
         $this->content->text = '';
         $this->content->footer = '';
         $config = get_config('block_naplan_results_report');
-        
+
         // Check DB settings are available
-        if( empty($config->dbtype) ||
+        if (
+            empty($config->dbtype) ||
             empty($config->dbhost) ||
             empty($config->dbuser) ||
             empty($config->dbpass) ||
             empty($config->dbname) ||
-            empty($config->dbspnaplanresult)) {
-            $notification = new \core\output\notification(get_string('nodbsettings', 'block_naplan_results_report'),
-                                                          \core\output\notification::NOTIFY_ERROR);
+            empty($config->dbspnaplanresult)
+        ) {
+            $notification = new \core\output\notification(
+                get_string('nodbsettings', 'block_naplan_results_report'),
+                \core\output\notification::NOTIFY_ERROR
+            );
             $notification->set_show_closebutton(false);
             return $OUTPUT->render($notification);
         }
-
-        if (grades_effort_report\can_view_on_profile()) {
-            $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);          
-            $data = naplan_results_report\get_template_contexts($profileuser->username);
-            $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);   
-        } else {
+        try {
+            if (naplan_results_report\can_view_on_profile()) {
+                $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
+                $data = naplan_results_report\get_template_contexts($profileuser->username);
+                $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
+            } else {
+                $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
+            }
+        } catch (\Throwable $th) {
             $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
-
         }
-         
     }
 
     public function instance_allow_multiple()

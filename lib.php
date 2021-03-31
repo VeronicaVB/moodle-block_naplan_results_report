@@ -42,10 +42,10 @@ function get_template_contexts($username)
         $years['year'][] = $result->testleveldescription;
         $r = new \stdClass();
         $r->value = $result->testresultdescription;
-        $areasdetails[ $result->testareadescription]['result'][] = $r;
+        $areasdetails[$result->testareadescription]['result'][] = $r;
     }
 
-    
+
     $years = array_unique($years['year']);
     $yearlabels = [];
 
@@ -55,17 +55,17 @@ function get_template_contexts($username)
         $yearlabels['label'][] = $y;
     }
 
-    foreach($areasdetails as $area => $results) {
+    foreach ($areasdetails as $area => $results) {
         $summary = new \stdClass();
         $summary->area = $area;
         $summary->results = $results;
-        
+
         $summaries['summaries'][] = $summary;
     }
 
-   
-    $data = ['years' => $yearlabels, 'testarea' => $summaries];
 
+    $data = ['years' => $yearlabels, 'testarea' => $summaries, 'hasdata' => !empty($summaries)];
+   
     return $data;
 }
 
@@ -108,7 +108,7 @@ function can_view_on_profile()
     global $DB, $USER, $PAGE;
 
     $config = get_config('block_naplan_results_report');
-    if ($PAGE->url->get_path() ==  $config->profileurl) { 
+    if ($PAGE->url->get_path() ==  $config->profileurl) {
         // Admin is allowed.
         $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
 
