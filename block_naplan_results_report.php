@@ -68,7 +68,7 @@ class block_naplan_results_report extends block_base
                 $data = naplan_results_report\get_template_contexts($profileuser->username);
                 $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
             } else {
-                $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
+                $this->content->text = '';
             }
         } catch (\Throwable $th) {
             $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
