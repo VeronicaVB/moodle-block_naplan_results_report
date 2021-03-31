@@ -107,8 +107,8 @@ function can_view_on_profile()
 {
     global $DB, $USER, $PAGE;
 
-
-    if ($PAGE->url->get_path() ==  '/user/profile.php') { 
+    $config = get_config('block_naplan_results_report');
+    if ($PAGE->url->get_path() ==  $config->profileurl) { 
         // Admin is allowed.
         $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
 

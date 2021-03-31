@@ -53,6 +53,8 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('block_naplan_results_report/dbname', get_string('dbname', 'block_naplan_results_report'), '', ''));
 
     $settings->add(new admin_setting_configtext('block_naplan_results_report/dbspnaplanresult', get_string('dbspnaplanresult', 'block_naplan_results_report'), get_string('dbspnaplanresult_desc', 'block_naplan_results_report'), ''));
+    
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/profileurl', get_string('profileurl', 'block_naplan_results_report'), get_string('profileurl_desc', 'block_naplan_results_report'), ''));
 
     
 }
