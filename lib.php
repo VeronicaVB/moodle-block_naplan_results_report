@@ -63,7 +63,6 @@ function get_template_contexts($username)
         $summaries['summaries'][] = $summary;
     }
 
-
     $data = ['years' => $yearlabels, 'testarea' => $summaries, 'hasdata' => !empty($summaries)];
    
     return $data;

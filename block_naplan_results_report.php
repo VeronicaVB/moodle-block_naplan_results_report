@@ -62,16 +62,15 @@ class block_naplan_results_report extends block_base
             $notification->set_show_closebutton(false);
             return $OUTPUT->render($notification);
         }
+
         try {
             if (naplan_results_report\can_view_on_profile()) {
                 $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
                 $data = naplan_results_report\get_template_contexts($profileuser->username);
+                
                 $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
-            } else {
-                $this->content->text = '';
-            }
+            } 
         } catch (\Throwable $th) {
-            $this->content->text = get_string('reportunavailable', 'block_naplan_results_report');
         }
     }
 
