@@ -67,8 +67,9 @@ class block_naplan_results_report extends block_base
             if (naplan_results_report\can_view_on_profile()) {
                 $profileuser = $DB->get_record('user', ['id' => $PAGE->url->get_param('id')]);
                 $data = naplan_results_report\get_template_contexts($profileuser->username);
-                
-                $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
+                if ($data['hasdata']) {
+                    $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
+                }
             } 
         } catch (\Throwable $th) {
         }
