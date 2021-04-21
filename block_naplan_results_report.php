@@ -70,7 +70,7 @@ class block_naplan_results_report extends block_base
                 if ($data['hasdata']) {
                     $this->content->text = $OUTPUT->render_from_template('block_naplan_results_report/main', $data);
                 }
-            } 
+            }
         } catch (\Throwable $th) {
         }
     }
@@ -93,5 +93,20 @@ class block_naplan_results_report extends block_base
     public function hide_header()
     {
         return true;
+    }
+
+    /**
+     * Gets Javascript required for the widget functionality.
+     */
+    public function get_required_javascript()
+    {
+        global $USER;
+        $config = get_config('block_naplan_results_report');
+       
+        $url = empty($config->naplanscales) ? 'https://www.nap.edu.au/_resources/common_scales_image_file.png' : $config->naplanscales;
+        parent::get_required_javascript();
+        $this->page->requires->js_call_amd('block_naplan_results_report/control', 'init', [
+            'naplanscale' => $url,
+        ]);
     }
 }

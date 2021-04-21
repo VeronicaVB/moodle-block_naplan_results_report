@@ -36,12 +36,19 @@ function get_template_contexts($username)
 
     $years = [];
     $areasdetails = [];
+    $colours = [
+        'LightGreen' => '#8fd9a8',
+        'LightSalmon' => '#ffba93',
+        '#F3FCD6' => '#F3FCD6',
+        'HotPink' => '#e05297',
+        'whitesmoke' => 'whitesmoke'
+    ];
 
     foreach ($results as $result) {
-
         $years['year'][] = $result->testleveldescription;
         $r = new \stdClass();
         $r->value = $result->testresultdescription;
+        $r->colour = $colours[ $result->thecolour];
         $areasdetails[$result->testareadescription]['result'][] = $r;
     }
 
@@ -59,12 +66,11 @@ function get_template_contexts($username)
         $summary = new \stdClass();
         $summary->area = $area;
         $summary->results = $results;
-
         $summaries['summaries'][] = $summary;
     }
-
+    
     $data = ['years' => $yearlabels, 'testarea' => $summaries, 'hasdata' => !empty($summaries)];
-   
+  
     return $data;
 }
 

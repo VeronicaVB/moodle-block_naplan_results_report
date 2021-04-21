@@ -1,3 +1,8 @@
 .naplan-scale {
-    width: 100%;
+  width: 100%;
+}
+
+span#scale-info {
+  cursor: pointer;
+  color: #66A8D8;
 }

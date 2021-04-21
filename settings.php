@@ -56,5 +56,7 @@ if ($ADMIN->fulltree) {
     
     $settings->add(new admin_setting_configtext('block_naplan_results_report/profileurl', get_string('profileurl', 'block_naplan_results_report'), get_string('profileurl_desc', 'block_naplan_results_report'), ''));
 
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/naplanscales', get_string('naplanscales', 'block_naplan_results_report'), get_string('naplanscales_desc', 'block_naplan_results_report'), 'https://www.nap.edu.au/_resources/common_scales_image_file.png'));
+
     
 }

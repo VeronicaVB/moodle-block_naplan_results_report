@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'NAPLAN results report';
 $string['pluginname_desc'] = 'This plugin depends on DW.';
-$string['naplan_results_report'] = 'NAPLAN Results Report';
+$string['naplan_results_report'] = 'NAPLAN';
 $string['naplan_results_report:addinstance'] = 'Add a new NAPLAN results  report block';
 $string['naplan_results_report:myaddinstance'] = 'Add a new NAPLAN results block to My Moodle page';
 $string['dbtype'] = 'Database driver';
@@ -45,3 +45,5 @@ $string['reportlabel'] = 'NAPLAN Results';
 $string['testarea'] = 'Test Area';
 $string['reportunavailable'] = 'NAPLAN results report unavailable';
 $string['naplanscale'] = 'National Assessment Program -Literacy and Numeracy National Assessment Scale';
+$string['naplanscales'] = 'National Assessment URL';
+$string['naplanscales_desc'] = 'URL to NAPLAN scales';

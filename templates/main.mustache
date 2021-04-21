@@ -21,38 +21,27 @@ along with Moodle. If not, see
 
 }}
 
-<section class="node_category card d-inline-block w-100 mb-3">
+<section>
     <div class="card-body">
         <h3 class="lead">{{#str}}naplan_results_report, block_naplan_results_report {{/str}}</h3>
+        <span id="scale-info" class="fa fa-info-circle "></span>
         <div class="container-fluid">
             <div class="row align-items-center">
-               
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <dl>
                         <dd>
                             <ul class="badges">
-                                {{#hasdata}} 
-                                    {{> block_naplan_results_report/naplan_result}}
+                                {{#hasdata}}
+                                {{> block_naplan_results_report/naplan_result}}
                                 {{/hasdata}}
 
                                 {{^hasdata}}
-                                    {{> block_naplan_results_report/naplan_no_data}}
+                                {{> block_naplan_results_report/naplan_no_data}}
                                 {{/hasdata}}
                             </ul>
                         </dd>
                     </dl>
                 </div>
-                {{#hasdata}} 
-                    <div class="col-lg-6">
-                        <dl>
-                            <dd>
-                                <ul class="badges">
-                                <img class = "naplan-scale" src="https://www.nap.edu.au/_resources/common_scales_image_file.png" >
-                                </ul>
-                            </dd>
-                        </dl>
-                    </div>
-                {{/hasdata}} 
             </div>
         </div>
     </div>
