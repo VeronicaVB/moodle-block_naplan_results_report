@@ -62,7 +62,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear7', get_string('bcyear7', 'block_naplan_results_report'), get_string('bcyear7_desc', 'block_naplan_results_report'), 'rgba(153, 102, 255, 0.2)'));
 
-    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear9', get_string('bcyear7', 'block_naplan_results_report'), get_string('bcyear9_desc', 'block_naplan_results_report'), 'rgba(153, 102, 255, 0.2)'));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear9', get_string('bcyear9', 'block_naplan_results_report'), get_string('bcyear9_desc', 'block_naplan_results_report'), 'rgba(153, 102, 255, 0.2)'));
 
     
 }

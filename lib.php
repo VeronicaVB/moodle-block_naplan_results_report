@@ -48,6 +48,7 @@ function get_template_contexts($username)
         'Year 3' => $config->bcyear3,
         'Year 5' =>  $config->bcyear5,
         'Year 7' => $config->bcyear7,
+        'Year 9' => $config->bcyear9
     ];
 
     $datasets = [];
