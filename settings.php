@@ -55,8 +55,14 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('block_naplan_results_report/dbspnaplanresult', get_string('dbspnaplanresult', 'block_naplan_results_report'), get_string('dbspnaplanresult_desc', 'block_naplan_results_report'), ''));
     
     $settings->add(new admin_setting_configtext('block_naplan_results_report/profileurl', get_string('profileurl', 'block_naplan_results_report'), get_string('profileurl_desc', 'block_naplan_results_report'), ''));
+    
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear3', get_string('bcyear3', 'block_naplan_results_report'), get_string('bcyear3_desc', 'block_naplan_results_report'), 'rgba(255, 99, 132, 0.2)'));
+    
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear5', get_string('bcyear5', 'block_naplan_results_report'), get_string('bcyear5_desc', 'block_naplan_results_report'), 'rgba(255, 206, 86, 0.2)'));
 
-    $settings->add(new admin_setting_configtext('block_naplan_results_report/naplanscales', get_string('naplanscales', 'block_naplan_results_report'), get_string('naplanscales_desc', 'block_naplan_results_report'), 'https://www.nap.edu.au/_resources/common_scales_image_file.png'));
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear7', get_string('bcyear7', 'block_naplan_results_report'), get_string('bcyear7_desc', 'block_naplan_results_report'), 'rgba(153, 102, 255, 0.2)'));
+
+    $settings->add(new admin_setting_configtext('block_naplan_results_report/bcyear9', get_string('bcyear7', 'block_naplan_results_report'), get_string('bcyear9_desc', 'block_naplan_results_report'), 'rgba(153, 102, 255, 0.2)'));
 
     
 }

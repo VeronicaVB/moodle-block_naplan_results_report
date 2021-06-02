@@ -21,35 +21,6 @@ along with Moodle. If not, see
 
 }}
 
-<br>
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr class="text-center">
-                <th colspan="">{{#str}} testarea, block_naplan_results_report {{/str}}</th>
-
-                {{#years}} 
-                    {{#label}} 
-                        <th>{{year}}</th>
-                    {{/label}}
-                {{/years}}
-            </tr>
-
-        </thead>
-        <tbody>
-            {{#testarea}}
-                {{#summaries}} 
-                    <tr>
-                        <td>{{area}}</td>
-                        {{#results}} 
-                            {{#result}} 
-                                <td style="background: {{colour}};">{{value}}</td>
-                            {{/result}}
-                        {{/results}}
-                    </tr>
-                {{/summaries}}
-            {{/testarea}}
-
-        </tbody>
-    </table>
+<div>
+    <canvas id="resultsChart" data-results="{{results}}"></canvas> 
 </div>

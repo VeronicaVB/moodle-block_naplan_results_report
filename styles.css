@@ -1,8 +1,48 @@
 .naplan-scale {
-  width: 100%;
+    width: 100%;
 }
 
 span#scale-info {
-  cursor: pointer;
-  color: #66A8D8;
+    cursor: pointer;
+    color: #66A8D8;
+}
+
+img#scaleimg {
+    width: 100%;
+}
+
+section.block.block_naplan_results_report.card.mb-3 {
+    width: 50%;
+}
+
+a.chart-action {
+    transition: background .25s, border-color .25s;
+    background: rgba(40, 44, 52, .05);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: #3080d0;
+    text-decoration: none;
+    display: inline-block;
+    font-size: .8rem;
+    padding: 8px 16px;
+    margin: 0 8px 8px 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+div.chart-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 1024px) {
+
+    section.block.block_naplan_results_report.card.mb-3 {
+        width: 100%;
+
+
+    }
 }

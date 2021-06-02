@@ -33,6 +33,7 @@ function get_template_contexts($username)
 {
 
     $results = get_naplan_results($username);
+    $config = get_config('block_naplan_results_report');
 
     $years = [];
     $areasdetails = [];
@@ -43,16 +44,48 @@ function get_template_contexts($username)
         'HotPink' => '#e05297',
         'whitesmoke' => 'whitesmoke'
     ];
+    $backgroundcolor = [
+        'Year 3' => $config->bcyear3,
+        'Year 5' =>  $config->bcyear5,
+        'Year 7' => $config->bcyear7,
+    ];
+
+    $datasets = [];
 
     foreach ($results as $result) {
+        $datasets['labels'][] = trim(str_replace('Band', '', $result->testareadescription));
+
         $years['year'][] = $result->testleveldescription;
         $r = new \stdClass();
         $r->value = $result->testresultdescription;
-        $r->colour = $colours[ $result->thecolour];
+        $r->colour = $colours[$result->thecolour];
         $areasdetails[$result->testareadescription]['result'][] = $r;
+
+        $dataset = new \stdClass();
+        $dataset->label = $result->testareadescription;
+        $dataset->testresultdescription =  $result->testresultdescription;
+        $dataset->year = $result->testleveldescription;
+        $datasets[$result->testleveldescription][] = $dataset;
     }
 
+    $datasets['labels'] = array_unique($datasets['labels']); // Remove duplicates.
+    $resultsperyear = [];
 
+    foreach ($datasets as $i => $dataset) {
+        if ($i == 'labels') continue;
+        $datatorender = new \stdClass();
+        $datatorender->label = $i;
+        $datatorender->results = [];
+        $datatorender->backgroundcolor = [$backgroundcolor[$i]];
+        
+        foreach ($dataset as $y => $data) {
+            array_push($datatorender->results, $data->testresultdescription);
+        }
+
+        array_push($resultsperyear, $datatorender);
+    }
+
+    $graphdata = ['labels' => $datasets['labels'], 'datasets' => $resultsperyear];
     $years = array_unique($years['year']);
     $yearlabels = [];
 
@@ -68,12 +101,11 @@ function get_template_contexts($username)
         $summary->results = $results;
         $summaries['summaries'][] = $summary;
     }
-    
-    $data = ['years' => $yearlabels, 'testarea' => $summaries, 'hasdata' => !empty($summaries)];
-  
+
+    $data = ['years' => $yearlabels, 'testarea' => $summaries, 'hasdata' => !empty($summaries), 'results' => json_encode($graphdata), 'naplanscale' => 'https://www.nap.edu.au/_resources/common_scales_image_file.png'];
+
     return $data;
 }
-
 
 /**
  * Call to the SP 
@@ -100,7 +132,6 @@ function get_naplan_results($username)
         $naplanresults = $externalDB->get_records_sql($sql, $params);
 
         return $naplanresults;
-
     } catch (\Exception $ex) {
         throw $ex;
     }
